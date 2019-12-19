@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>onlineEnglishLearning</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
+	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+
+	<link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+        <!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap3.3.7.css">
+    <link rel="stylesheet" href="css/sweetalert.css">
+        <script type="text/javascript" src="js/myjs.js"></script>
+        <script type="text/javascript" src="js/jquery.cookie.js"></script>
+        <script type="text/javascript" src="js/sweetalert-dev.js"></script>
+
+	<!-- Theme style  -->
+	</head>
+    <style>
+        /*web background*/
+        .container{
+            display:table;
+            height:100%;
+        }
+
+        .row{
+            display: table-cell;
+            vertical-align: middle;
+        }
+        /* centered columns styles */
+        .row-centered {
+            text-align:center;
+        }
+        .col-centered {
+            display:inline-block;
+            float:none;
+            text-align:left;
+            margin-right:-4px;
+        }
+        .fh5co-cover{  height: 800px;
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            position: relative;
+            float: left;
+            width: 100%;
+        }
+    </style>
+<body class="fh5co-cover" style="background-image:url(/onlineEnglishLearning/img/img_bg.png);">
+<!-- 	<header  class="fh5co-cover"  style="background-image:url(images/img_bg.jpeg);" >
+	<h1>Welcome To onlineEnglishLearning Web</h1>
+</header> -->
+        <div class="container">
+            <div class="row row-centered">
+                <div class="well col-md-4 col-centered">
+                    <h2>欢迎登录</h2>
+
+                        <div class="input-group input-group-md">
+                            <span class="input-group-addon"></span>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名或邮箱"/>
+                        </div>
+                        <div class="input-group input-group-md">
+                            <span class="input-group-addon"></span>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码"/>
+                        </div>
+                        <br/>
+                    <input type="button" value="登陆" class="btn btn-success btn-block" onclick="login()"/><br/>
+                    <a href="/onlineEnglishLearning/register">新号注册</a>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

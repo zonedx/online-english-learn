@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="page">
+<head>
+    <script type="text/javascript" src="../static/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/common-style.css">
+    <link rel="stylesheet" href="../static/css/responsive.css">
+    <link rel="stylesheet" href="../static/css/sweetalert.css">
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        #sen-page {
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        #sen-page ul {
+            display: inline-block;
+
+        }
+
+        #sen-page ul li {
+            display: inline;
+        }
+
+        #sen-page ul li a,
+        #sen-page ul li a span {
+            position: relative;
+            float: left;
+            padding: 10px 20px;
+            line-height: 1.42857;
+            text-decoration: none;
+            color: #337ab7;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-left: -1px;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="pager">
+    <div class="text-right">
+        <!--<li th:text="${pars}"></li>-->
+        <ul style="margin:0px;" class="pagination">
+            <li><a th:href="@{/findAllWords/api(page=0)}">首页</a></li>
+            <li th:if="${datas.hasPrevious()}"><a href="/findAllWords/api/#"
+                                                  th:href="@{/findAllWords/api(page=${datas.number-1})}">上一页</a></li>
+
+            <!--总页数小于等于10-->
+            <!--<div th:if="${(datas.totalPages le 10) and (datas.totalPages gt 0)}" th:remove="tag">-->
+            <!--<div th:each="pg : ${#numbers.sequence(0, datas.totalPages - 1)}" th:remove="tag">-->
+            <!--<span th:if="${pg eq datas.getNumber()}" th:remove="tag">-->
+            <!--<li class="active"><span class="current_page line_height" th:text="${pg+1}">${pageNumber}</span></li>-->
+            <!--</span>-->
+            <!--<span th:unless="${pg eq datas.getNumber()}" th:remove="tag">-->
+            <!--<li><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${pg})}" th:text="${pg+1}"></a></li>-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash; 总数数大于10时 &ndash;&gt;-->
+            <!--<div th:if="${datas.totalPages gt 10}" th:remove="tag">-->
+            <!--<li th:if="${datas.number-2 ge 0}"><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.number}-2)}" th:text="${datas.number-1}"></a></li>-->
+            <!--<li th:if="${datas.number-1 ge 0}"><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.number}-1)}" th:text="${datas.number}"></a></li>-->
+            <!--<li class="active"><span class="current_page line_height" th:text="${datas.number+1}"></span></li>-->
+            <!--<li th:if="${datas.number+1 lt datas.totalPages}"><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.number}+1)}" th:text="${datas.number+2}"></a></li>-->
+            <!--<li th:if="${datas.number+2 lt datas.totalPages}"><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.number}+2)}" th:text="${datas.number+3}"></a></li>-->
+            <!--</div>-->
+
+
+            <li th:if="${datas.hasNext()}"><a href="/findAllWords/api/#"
+                                              th:href="@{/findAllWords/api(page=${datas.number+1})}">下一页</a></li>
+            <!--<li><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.totalPages-1})}">尾页</a></li>-->
+            <li><a th:href="@{/findAllWords/api(page=${datas.totalPages-1})}">尾页</a></li>
+            <li><span th:utext="'共'+${datas.totalPages}+'页 / '+${datas.totalElements}+' 条'"></span></li>
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="pagerforword">
+    <div th:each="obj:${datas}">
+        <!--上一行 动态获取单词类型-->
+        <!--<li th:text="${pars}"></li>-->
+        <ul style="margin:0px;" class="pagination">
+            <div  th:if="${datas.hasPrevious()}" style="float: left;margin-right: 10px">
+                <button type="button" class="btn btn-warning" ><a th:href="@{/findAllWords/api(token=${session.token},page=${datas.number-1},type=${obj.type})}">上一页</a></button>
+            </div>
+
+            <div  th:if="${datas.hasNext()}" style="float: left">
+                <button type="button" class="btn btn-warning" ><a th:href="@{/findAllWords/api(token=${session.token},page=${datas.number+1},type=${obj.type})}">下一页</a></button>
+            </div>
+
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="pagerforgotword">
+    <div>
+        <!--上一行 动态获取单词类型-->
+        <!--<li th:text="${pars}"></li>-->
+        <ul style="margin:0px;" class="pagination">
+            <div  th:if="${forgotWords.hasPrevious()}" style="float: left;margin-right: 10px">
+                <button type="button" class="btn btn-warning" ><a th:href="@{/word(token=${session.token},page=${forgotWords.number-1})}">上一页</a></button>
+            </div>
+
+            <div  th:if="${forgotWords.hasNext()}" style="float: left">
+                <button type="button" class="btn btn-warning" ><a th:href="@{/word(token=${session.token},page=${forgotWords.number+1})}">下一页</a></button>
+            </div>
+
+        </ul>
+    </div>
+</div>
+
+<!--<div th:fragment="pagerforsentential" class="sen-page">-->
+<!--<div class="text-right" th:each="obj:${datas}">-->
+<!--&lt;!&ndash;<li th:text="${pars}"></li>&ndash;&gt;-->
+<!--<ul style="margin:0px;">-->
+<!--<li><a  th:href="@{/findAllSentences/api(page=0)}" >首页</a></li>-->
+<!--<li th:if="${datas.hasPrevious()}"><a href="/findAllSentences/api/#" th:href="@{/findAllSentences/api(page=${datas.number-1})}" >上一页</a></li>-->
+
+
+<!--<li th:if="${datas.hasNext()}"><a href="/findAllSentences/api/#" th:href="@{/findAllSentences/api(page=${datas.number+1})}">下一页</a></li>-->
+<!--&lt;!&ndash;<li><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.totalPages-1})}">尾页</a></li>&ndash;&gt;-->
+<!--<li><a th:href="@{/findAllSentences/api(page=${datas.totalPages-1})}" >尾页</a></li>-->
+<!--<li><span th:utext="'共'+${datas.totalPages}+'页 / '+${datas.totalElements}+' 条'"></span></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+
+<div th:fragment="pagerforsentential">
+    <div class="text-right">
+        <!--<li th:text="${pars}"></li>-->
+        <ul >
+            <a th:href="@{/findAllSentences/api(token=${session.token},page=0)}">
+                <button type="button" class="btn btn-warning">首页</button>
+            </a>
+            <div  th:if="${datas.hasPrevious()}" style="display: inline-block">
+                <a th:href="@{/findAllSentences/api(token=${session.token},page=${datas.number-1})}">
+                    <button type="button" class="btn btn-warning">上一页</button>
+                </a>
+            </div>
+
+            <div  th:if="${datas.hasNext()}" style="display: inline-block">
+                <a th:href="@{/findAllSentences/api(token=${session.token},page=${datas.number+1})}">
+                    <button type="button" class="btn btn-warning">下一页</button>
+                </a>
+            </div>
+
+            <li><a th:href="@{/findAllSentences/api(page=0)}"
+                   style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;">首页</a>
+            </li>
+            <!--<li><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.totalPages-1})}">尾页</a></li>-->
+            <li><a th:href="@{/findAllSentences/api(page=${datas.totalPages-1})}"
+                   style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;">尾页</a>
+            </li>
+            <li><span th:utext="'共'+${datas.totalPages}+'页 / '+${datas.totalElements}+' 条'"
+                      style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="pagerforvideo">
+    <div class="text-right">
+        <!--<li th:text="${pars}"></li>-->
+        <ul style="margin:0px;"  class="pagination">
+            <li><a th:href="@{/findAllVideos/api(page=0)}"
+                   style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;">首页</a>
+            </li>
+            <li th:if="${datas.hasPrevious()}"><a href="/findAllVideos/api/#"
+                                                  th:href="@{/findAllVideos/api(page=${datas.number-1})}"
+                                                  style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;">上一页</a>
+            </li>
+
+
+            <li th:if="${datas.hasNext()}"><a href="/findAllVideos/api/#"
+                                              th:href="@{/findAllVideos/api(page=${datas.number+1})}"
+                                              style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;">下一页</a>
+            </li>
+            <!--<li><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.totalPages-1})}">尾页</a></li>-->
+            <li><a th:href="@{/findAllVideos/api(page=${datas.totalPages-1})}"
+                   style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;">尾页</a>
+            </li>
+            <li><span th:utext="'共'+${datas.totalPages}+'页 / '+${datas.totalElements}+' 条'"
+                      style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div th:fragment="pagerforBook">
+    <div class="text-right">
+        <!--上一行 动态获取单词类型-->
+        <!--<li th:text="${pars}"></li>-->
+        <ul style="margin:0px;" class="pagination">
+            <li><a th:href="@{/findBooksByCondition/api(page=0)}">首页</a></li>
+            <li th:if="${datas.hasPrevious()}"><a href="/findBooksByCondition/api/#"
+                                                  th:href="@{/findBooksByCondition/api(page=${datas.number-1})}">上一页</a>
+            </li>
+
+
+            <li th:if="${datas.hasNext()}"><a href="/findBooksByCondition/api/#"
+                                              th:href="@{/findBooksByCondition/api(page=${datas.number+1})}">下一页</a>
+            </li>
+            <!--<li><a href="https://my.oschina.net/wangxincj/blog/#" th:href="https://my.oschina.net/wangxincj/blog/@{${curUrl}(page=${datas.totalPages-1})}">尾页</a></li>-->
+            <li><a th:href="@{/findBooksByCondition/api(page=${datas.totalPages-1})}">尾页</a></li>
+            <li><span th:utext="'共'+${datas.totalPages}+'页 / '+${datas.totalElements}+' 条'"
+                      style="color: #337ab7;background-color: white;padding: 10px 20px;border: 1px solid #ddd;border-radius: 4px;height: 42px"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

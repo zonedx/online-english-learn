@@ -1,0 +1,338 @@
+﻿<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>首页</title>
+
+<!-- mobile responsive meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" th:href="@{/static/css/common-style.css}">
+<link rel="stylesheet" th:href="@{/static/css/responsive.css}">
+
+</head>
+<body class="home-one">
+<div class="preloader"></div>
+<header class="header clearfix">
+    <div class="main-header stricky bubble">
+        <div class="container">
+            <div class="logo pull-left">
+                <a href="index.html">
+                    <img th:src="@{/static/images/logo/1.png}" alt="Awesome Image">
+                </a>
+            </div>
+
+            <div class="nav-outer">
+                <div class="header-top">
+                    <div class="register">
+                        <a th:href="@{/register}" >注册</a>
+                        <a href="/onlineEnglishLearning/login.html" th:if="${session.username} == null">登陆 </a>
+                        <a th:if="${session.loginUserMap} != null" class="btn-cta">
+                            <a th:href="@{/findSelfInfo/api(token=${session.token})}" id="userInfoLink"  class="btn btn-outline-primary login text-white" >
+                                <span th:text="${session.username}"></span>
+                            </a>
+                        </a>
+                    </div>
+
+                    <div id="top-search" class="top-search">
+                        <span class="flaticon-search search"></span>
+                        <ul class="search-box">
+                            <li>
+                                <form action="#">
+                                    <input type="text" placeholder="Search for something...">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cart">
+                        <a th:href="@{/findAllCarts/api(token=${session.token})}"><span class="flaticon-shop"></span></a>
+                    </div>
+                </div>
+                <nav class="mainmenu-area">
+                    <div class="navbar" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            
+                        </div>
+
+                        <div class="navbar-collapse collapse text-center">  
+                            <ul>
+                                <li><a href="#">首页</a></li>
+                                <li><a th:href="@{/word(token=${session.token})}">背单词</a></li>
+                                <li><a th:href="@{/findAllSentences/api(token=${session.token},type=1)}">情景会话</a></li>
+                                <li class="dropdown">
+                                    <a href="#">听力训练</a>
+                                    <ul class="submenu">
+                                        <li><a th:href="@{/listening(token=${session.token})}">听力测试</a></li>
+                                        <li><a th:href="@{/findAllVideos/api(token=${session.token})}">影视英语</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a th:href="@{/findBooksByCondition/api}">图书商城</a>
+                                    <ul class="submenu">
+                                        <li><a th:href="@{/findAllCarts/api(token=${session.token})}">购物车 </a></li>
+                                        <li><a th:href="@{/findAllOrders/api(token=${session.token})}">已买到的宝贝</a></li>
+                                    </ul>
+                                </li>
+                                <li><a th:href="@{/findOneGame/api(token=${session.token})}">少儿游戏</a></li>
+                            </ul>  
+                        </div> 
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+
+<section class="rev_slider_wrapper">
+    <h2 class="hidden">rev slider</h2>
+    <div id="slider1" class="rev_slider"  data-version="5.0">
+        <ul>
+            <li class="gradient-overlay" data-transition="slotzoom-horizontal" data-slotamount="1" data-masterspeed="1000" th:data-thumb="@{/static/images/main-slider/1.jpg}"  data-saveperformance="off"  data-title="Awesome Title Here">
+                <img th:src="@{/static/images/main-slider/1.jpg}"  alt=""  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                
+                <div class="tp-caption lfl sfb tp-resizeme start"
+                data-x="left" data-hoffset="30"
+                data-y="center" data-voffset="0"
+                data-speed="1500"
+                data-start="1000"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><img th:src="@{/static/images/main-slider/7.png}" alt=""></div>
+                
+                <div class="tp-caption lfl sfb tp-resizeme start"
+                data-x="left" data-hoffset="245"
+                data-y="center" data-voffset="-190"
+                data-speed="1500"
+                data-start="1000"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><img th:src="@{/static/images/main-slider/1.png}" alt="">
+                    <p style="text-align: center">创造</p>
+                </div>
+
+                <div class="tp-caption lft sfb tp-resizeme start"
+                data-x="center" data-hoffset="50"
+                data-y="center" data-voffset="-110"
+                data-speed="1500"
+                data-start="1500"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><img th:src="@{/static/images/main-slider/2.png}" alt="">
+                    <p style="text-align: center">训练</p>
+                </div>
+                
+                <div class="tp-caption lfr sfb tp-resizeme start"
+                data-x="right" data-hoffset="150"
+                data-y="center" data-voffset="-40"
+                data-speed="1500"
+                data-start="2000"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><img th:src="@{/static/images/main-slider/4.png}" alt="">
+                    <p style="text-align: center">教程</p>
+                </div>
+                
+                <div class="tp-caption lfb sfb tp-resizeme start"
+                data-x="center" data-hoffset="240"
+                data-y="center" data-voffset="160"
+                data-speed="1500"
+                data-start="2500"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><img th:src="@{/static/images/main-slider/3.png}" alt="">
+                    <p style="text-align: center">目标</p>
+                </div>
+            </li>
+            <li class="gradient-overlay overly" data-transition="slotzoom-horizontal" data-slotamount="1" data-masterspeed="1000" th:data-thumb="@{/static/images/main-slider/2.jpg}"  data-saveperformance="off"  data-title="Awesome Title Here">
+                <img th:src="@{/static/images/main-slider/2.jpg}"  alt=""  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                
+                
+                <div class="tp-caption lfl sfb tp-resizeme start"
+                data-x="left" data-hoffset="0"
+                data-y="center" data-voffset="0"
+                data-speed="1500"
+                data-start="1000"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><img th:src="@{/static/images/main-slider/5.png}" alt=""></div>
+                
+                <div class="tp-caption lft sfb tp-resizeme start"
+                data-x="right" data-hoffset="0"
+                data-y="center" data-voffset="0"
+                data-speed="1500"
+                data-start="1500"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><div class="outer-box">
+                    <h3>In our website you can <br> learn  how to explore new <br> Things</h3>
+                    <p>在本网站你能学习<br>如何探索新东西</p>
+                </div></div>
+                
+            </li>
+
+            <li class="gradient-overlay" data-transition="slotzoom-horizontal" data-slotamount="1" data-masterspeed="1000" th:data-thumb="@{/static/images/main-slider/3.jpg}"  data-saveperformance="off"  data-title="Awesome Title Here">
+                <img th:src="@{/static/images/main-slider/3.jpg}"  alt=""  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                
+                
+                <div class="tp-caption lfl sfb tp-resizeme start"
+                data-x="left" data-hoffset="0"
+                data-y="center" data-voffset="0"
+                data-speed="1500"
+                data-start="1000"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><img th:src="@{/static/images/main-slider/6.png}" alt=""></div>
+                
+                <div class="tp-caption lft sfb tp-resizeme start"
+                data-x="left" data-hoffset="600"
+                data-y="center" data-voffset="-100"
+                data-speed="1500"
+                data-start="1500"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn">
+                    <h2>Our goal is provide a complete <br>  learn environments</h2>
+                    <p>我们的目标是提供一个完整的学习环境</p>
+
+                </div>
+
+                <div class="tp-caption lfr sfr tp-resizeme start"
+                data-x="left" data-hoffset="600"
+                data-y="center" data-voffset="0"
+                data-speed="1500"
+                data-start="2000"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"></div>
+
+                <div class="tp-caption lfb sfb tp-resizeme start"
+                data-x="left" data-hoffset="600"
+                data-y="center" data-voffset="80"
+                data-speed="1500"
+                data-start="2500"
+                data-easing="easeOutExpo"
+                data-splitin="none"
+                data-splitout="none"
+                data-elementdelay="0.01"
+                data-endelementdelay="0.3"
+                data-endspeed="1200"
+                data-endeasing="Power4.easeIn"><a href="#" class="theme-btn btn-style-one">Get Involved</a></div>
+
+            </li> 
+
+                
+        </ul>
+    </div>
+</section>
+
+
+
+
+
+        <!-- jQuery js -->
+    <script th:src="@{/static/assets/jquery/jquery-1.12.3.min.js}"></script>
+    <!-- bootstrap js -->
+    <script th:src="@{/static/assets/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jQuery ui js -->
+    <script th:src="@{/static/assets/jquery-ui-1.11.4/jquery-ui.js}"></script>
+
+    <!-- wow js -->
+    <script th:src="@{/static/assets/wow.js}"></script>
+
+    <!-- owl carousel js -->
+    <script th:src="@{/static/assets/owl.carousel-2/owl.carousel.min.js}"></script>              <!-- jquery.bxslider js -->
+    <script th:src="@{/static/assets/jquery.bxslider/jquery.bxslider.min.js}"></script>
+    <!-- jQuery validation -->
+    <script th:src="@{/static/assets/jquery-validation/dist/jquery.validate.min.js}"></script>
+    <!-- gmap.js helper -->
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRvBPo3-t31YFk588DpMYS6EqKf-oGBSI"></script>-->
+    <!-- gmap.js -->
+    <!--<script src="assets/gmaps.js"></script>-->
+    
+    <!-- mixit u -->
+    <script th:src="@{/static/assets/jquery.mixitup.min.js}"></script>
+    <script th:src="@{/static/assets/isotope.pkgd.min.js}"></script>
+    <script th:src="@{/static/assets/jquery.countdown.min.js}"></script>
+    <script th:src="@{/static/assets/masterslider/masterslider.js}"></script>
+    <script th:src="@{/static/assets/SmoothScroll.js}"></script>
+
+    <!-- revolution slider js -->
+    <script th:src="@{/static/assets/revolution/js/jquery.themepunch.tools.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/jquery.themepunch.revolution.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.actions.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.carousel.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.kenburn.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.layeranimation.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.migration.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.navigation.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.parallax.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.slideanims.min.js}"></script>
+    <script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.video.min.js}"></script>
+
+    <script th:src="@{/static/assets/Polyglot-Language-Switcher-master/js/jquery.polyglot.language.switcher.js}"></script>
+    <script th:src="@{/static/assets/fancyapps-fancyBox/source/jquery.fancybox.pack.js}"></script>
+    <script th:src="@{/static/assets/scrollbar.js}"></script>
+    
+    <!--<script src="js/default-map-script.js"></script>-->
+    <script th:src="@{/static/js/script.js}"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
+

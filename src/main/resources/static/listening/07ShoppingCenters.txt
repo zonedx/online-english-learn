@@ -1,0 +1,10 @@
+1. pharmacy
+2. flower shop
+3. laundromat
+4. hairdresser
+5. office supply store
+6. clothing store
+7. restaurant
+8. supermarket
+9. furniture store
+10. jewelry store

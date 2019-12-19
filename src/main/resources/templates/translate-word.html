@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/static/css/common-style.css}">
+    <link rel="stylesheet" th:href="@{/static/css/responsive.css}">
+    <link rel="stylesheet" th:href="@{/static/css/sweetalert.css}">
+</head>
+<body class="home-one">
+<div class="preloader"></div>
+<header class="header clearfix">
+    <div class="main-header stricky bubble">
+        <div class="container">
+            <div class="logo pull-left">
+                <a href="index.html">
+                    <img th:src="@{/static/images/logo/1.png}" alt="Awesome Image">
+                </a>
+            </div>
+
+            <div class="nav-outer">
+                <div class="header-top">
+                    <div class="register">
+                        <a th:href="@{/register}" >注册</a>
+                        <a href="/onlineEnglishLearning/login.html" th:if="${session.username} == null">登陆 </a>
+                        <a th:if="${session.loginUserMap} != null" class="btn-cta">
+                            <a th:href="@{/findSelfInfo/api(token=${session.token})}" id="userInfoLink"  class="btn btn-outline-primary login text-white" >
+                                <span th:text="${session.username}"></span>
+                            </a>
+                        </a>
+                    </div>
+
+                    <div id="top-search" class="top-search">
+                        <span class="flaticon-search search"></span>
+                        <ul class="search-box">
+                            <li>
+                                <form action="#">
+                                    <input type="text" placeholder="Search for something...">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cart">
+                        <a th:href="@{/findAllCarts/api(token=${session.token})}"><span class="flaticon-shop"></span></a>
+                    </div>
+                </div>
+                <nav class="mainmenu-area">
+                    <div class="navbar" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+
+                        </div>
+
+                        <div class="navbar-collapse collapse text-center">
+                            <ul>
+                                <li><a th:href="@{/index(token=${session.token})}">首页</a></li>
+                                <li><a th:href="@{/word(token=${session.token})}">背单词</a></li>
+                                <li><a th:href="@{/findAllSentences/api(token=${session.token},type=1)}">情景会话</a></li>
+                                <li class="dropdown">
+                                    <a href="#">听力训练</a>
+                                    <ul class="submenu">
+                                        <li><a th:href="@{/listening(token=${session.token})}">听力测试</a></li>
+                                        <li><a th:href="@{/findAllVideos/api(token=${session.token})}">影视英语</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a th:href="@{/findBooksByCondition/api}">图书商城</a>
+                                    <ul class="submenu">
+                                        <li><a th:href="@{/findAllCarts/api(token=${session.token})}">购物车 </a></li>
+                                        <li><a th:href="@{/findAllOrders/api(token=${session.token})}">已买到的宝贝</a></li>
+                                    </ul>
+                                </li>
+                                <li><a th:href="@{/findOneGame/api(token=${session.token})}">少儿游戏</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</header>
+<section class="page-title center">
+    <div class="container">
+        <h2>背单词</h2>
+        <ul>
+            <li><a th:href="@{/index(token=${session.token})}">首页</a></li>
+            <li><a th:href="@{/word(token=${session.token})}">背单词</a></li>
+            <li>--词义回想</li>
+        </ul>
+    </div>
+</section>
+
+<section class="cart-section">
+    <div class="container">
+
+        <!--Cart Outer-->
+        <div class="cart-outer">
+            <div class="table-outer">
+                <table class="cart-table">
+                    <thead class="cart-header">
+                    <tr>
+                        <th>单词</th>
+                        <th>点击下面区域查看词义</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="obj : ${datas}">
+                        <td th:text="${obj.english}" id="english">user</td>
+                        <td>
+                            <div id="translate" onclick="f(this)" th:text="${obj.chinese}" style="opacity: 0">点击</div>
+                        </td>
+                        <td>
+                            <li class="btn-cta">
+                                <button onclick="forgotTag(this)" style="color: #8a7bd1" th:name="${obj.english}">遗忘词汇标记</button>
+                            </li>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="float: right">
+                    <a th:href="@{/findTranslate/api(token=${session.token},page=0)}" style="display: inline-block">
+                        <button type="button" class="btn btn-warning">首页</button>
+                    </a>
+                    <div th:if="${datas.hasPrevious()}" style="display: inline-block">
+                        <a th:href="@{/findTranslate/api(token=${session.token},page=${datas.number-1})}">
+                            <button type="button" class="btn btn-warning" >上一页</button>
+                        </a>
+                    </div>
+                    <div  th:if="${datas.hasNext()}" style="display: inline-block">
+                        <a th:href="@{/findTranslate/api(token=${session.token},page=${datas.number+1})}">
+                            <button type="button" class="btn btn-warning" >下一页</button>
+                        </a>
+                    </div>
+                    <div style="display: inline-block">
+                        <a  th:href="@{/findTranslate/api(token=${session.token},page=${datas.totalPages-1})}">
+                            <button type="button" class="btn btn-warning" >尾页</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="footer">
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-bg">
+            <div class="container">
+                <div class="pull-left">
+                    <figure><a href="#"><img src="../static/images/logo/1.png" alt=""></a></figure>
+                </div>
+                <div class="pull-right">
+                    <div class="menu">
+                        <ul class="clearfix">
+                            <li><a th:href="@{/index(token=${session.token})}">home</a></li>
+                            <li><a th:href="@{/word(token=${session.token})}">word</a></li>
+                            <li><a th:href="@{/findAllSentences/api(token=${session.token},type=1)}">sentential</a></li>
+                            <li><a href="gallery.html">listening</a></li>
+                            <li><a href="news.html">shop</a></li>
+                            <li><a href="shop.html">game</a></li>
+                        </ul>
+                    </div>
+                    <div class="copy-right">
+                        Zone @ 2019.Company name All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--Scroll to top-->
+<div class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></div>
+
+<script src="../static/js/myjs.js"></script>
+<!-- jQuery js -->
+<script th:src="@{/static/assets/jquery/jquery-1.12.3.min.js}"></script>
+<script src="../static/js/jquery.cookie.js"></script>
+<!-- sweetalert -->
+<script th:src="@{/static/js/sweetalert-dev.js}"></script>
+<!-- bootstrap js -->
+<script th:src="@{/static/assets/bootstrap/js/bootstrap.min.js}"></script>
+<!-- jQuery ui js -->
+<script th:src="@{/static/assets/jquery-ui-1.11.4/jquery-ui.js}"></script>
+
+<!-- wow js -->
+<script th:src="@{/static/assets/wow.js}"></script>
+
+<!-- owl carousel js -->
+<script th:src="@{/static/assets/owl.carousel-2/owl.carousel.min.js}"></script>              <!-- jquery.bxslider js -->
+<script th:src="@{/static/assets/jquery.bxslider/jquery.bxslider.min.js}"></script>
+<!-- jQuery validation -->
+<script th:src="@{/static/assets/jquery-validation/dist/jquery.validate.min.js}"></script>
+<!-- gmap.js helper -->
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRvBPo3-t31YFk588DpMYS6EqKf-oGBSI"></script>-->
+<!-- gmap.js -->
+<!--<script src="assets/gmaps.js"></script>-->
+
+<!-- mixit u -->
+<script th:src="@{/static/assets/jquery.mixitup.min.js}"></script>
+<script th:src="@{/static/assets/isotope.pkgd.min.js}"></script>
+<script th:src="@{/static/assets/jquery.countdown.min.js}"></script>
+<script th:src="@{/static/assets/masterslider/masterslider.js}"></script>
+<script th:src="@{/static/assets/SmoothScroll.js}"></script>
+
+<!-- revolution slider js -->
+<script th:src="@{/static/assets/revolution/js/jquery.themepunch.tools.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/jquery.themepunch.revolution.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.actions.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.carousel.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.kenburn.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.layeranimation.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.migration.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.navigation.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.parallax.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.slideanims.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.video.min.js}"></script>
+
+<script th:src="@{/static/assets/Polyglot-Language-Switcher-master/js/jquery.polyglot.language.switcher.js}"></script>
+<script th:src="@{/static/assets/fancyapps-fancyBox/source/jquery.fancybox.pack.js}"></script>
+<script th:src="@{/static/assets/scrollbar.js}"></script>
+
+<!--<script src="js/default-map-script.js"></script>-->
+<script th:src="@{/static/js/script.js}"></script>
+<script>
+    function f(td) {
+            $(td).css("opacity","1")
+
+            // $.ajaxSetup({
+            //     complete:function(xhr,status){
+            //         if("REDIRECT" == xhr.getResponseHeader("REDIRECT")){ //若HEADER中含有REDIRECT说明后端想重定向，
+            //             var win = window;
+            //             while(win != win.top){
+            //                 win = win.top;
+            //             }
+            //             win.location.href = xhr.getResponseHeader("CONTENTPATH");//将后端重定向的地址取出来,使用win.location.href去实现重定向的要求
+            //         }
+            //     }
+            // });
+            // $.ajax({
+            //     url: "http://localhost:8080/onlineEnglishLearning/findTranslation/api",
+            //     type: "post",
+            //     headers: {'token': $.cookie('token')},
+            //     data:{
+            //         english:id
+            //     },
+            //     success: function (data) {
+            //         if (data.code == 200) {
+            //             alert(data.data);
+            //             //$("#translate").text(data.data).css("fonts-size","25px");
+            //         }else {
+            //             alert("该单词错误");
+            //         }
+            //     },
+            //     error:function () {
+            //         alert("请登陆后查看")
+            //     }
+            // });
+
+    }
+
+</script>
+</body>
+</html>

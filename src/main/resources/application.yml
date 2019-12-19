@@ -1,0 +1,39 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false
+
+  profiles:
+    active: dev
+  datasource: # database configuration
+    url : jdbc:mysql://localhost:3306/online_english_learn?useUnicode=true&characterEncoding=UTF-8
+    username : root
+    password : 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database : MYSQL
+    show-sql : true  # 在控制台可以看到SQL语句
+    hibernate:
+      ddl-auto : update # update create create-drop validate
+      format_sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  mvc:
+      static-path-pattern: /static/**
+
+logging:
+  config: classpath:logback.xml
+  path: D:/logs
+
+mail:
+  protocol: http # 协议
+  serverDomain: 127.0.0.1 # 本服务器域名或者IP
+  port: 8080
+  contextPath: /onlineEnglishLearning # 开发环境>项目名
+  actionPath: /register-activate/api #请求激活服务的URI
+  host: smtp.qq.com # 指定发送邮件的主机smtp.qq.com(QQ)|smtp.163.com(网易)
+  subject: 【onlineEnglishLearning - Activate Your Account】
+  senderEmail: 857370734@qq.com # 发件人邮箱
+  authCode: jcwpeipytwfmbegh
+server:
+  servlet:
+    context-path: /onlineEnglishLearning

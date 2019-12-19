@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/static/css/common-style.css}">
+    <link rel="stylesheet" th:href="@{/static/css/responsive.css}">
+    <!-- shopping -->
+    <link rel="stylesheet" href="../static/css/mystyle.css">
+    <link rel="stylesheet" href="../static/css/sweetalert.css">
+</head>
+<body class="home-one">
+<div class="preloader"></div>
+<header class="header clearfix">
+    <div class="main-header stricky bubble">
+        <div class="container">
+            <div class="logo pull-left">
+                <a href="index.html">
+                    <img th:src="@{/static/images/logo/1.png}" alt="Awesome Image">
+                </a>
+            </div>
+
+            <div class="nav-outer">
+                <div class="header-top">
+                    <div class="register">
+                        <a th:href="@{/register}" >注册</a>
+                        <a href="/onlineEnglishLearning/login.html" th:if="${session.username} == null">登陆 </a>
+                        <a th:if="${session.loginUserMap} != null" class="btn-cta">
+                            <a th:href="@{/findSelfInfo/api(token=${session.token})}" id="userInfoLink"  class="btn btn-outline-primary login text-white" >
+                                <span th:text="${session.username}"></span>
+                            </a>
+                        </a>
+                    </div>
+
+                    <div id="top-search" class="top-search">
+                        <span class="flaticon-search search"></span>
+                        <ul class="search-box">
+                            <li>
+                                <form action="#">
+                                    <input type="text" placeholder="Search for something...">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cart">
+                        <a th:href="@{/findAllCarts/api(token=${session.token})}"><span class="flaticon-shop"></span></a>
+                    </div>
+                </div>
+                <nav class="mainmenu-area">
+                    <div class="navbar" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+
+                        </div>
+
+                        <div class="navbar-collapse collapse text-center">
+                            <ul>
+                                <li><a th:href="@{/index(token=${session.token})}">首页</a></li>
+                                <li><a th:href="@{/word(token=${session.token})}">背单词</a></li>
+                                <li><a th:href="@{/findAllSentences/api(token=${session.token},type=1)}">情景会话</a></li>
+                                <li class="dropdown">
+                                    <a href="#">听力训练</a>
+                                    <ul class="submenu">
+                                        <li><a th:href="@{/listening(token=${session.token})}">听力测试</a></li>
+                                        <li><a th:href="@{/findAllVideos/api(token=${session.token})}">影视英语</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a th:href="@{/findBooksByCondition/api}">图书商城</a>
+                                    <ul class="submenu">
+                                        <li><a th:href="@{/findAllCarts/api(token=${session.token})}">购物车 </a></li>
+                                        <li><a th:href="@{/findAllOrders/api(token=${session.token})}">已买到的宝贝</a></li>
+                                    </ul>
+                                </li>
+                                <li><a th:href="@{/findOneGame/api(token=${session.token})}">少儿游戏</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</header>
+<section class="page-title center">
+    <div class="container">
+        <h2>图书详情</h2>
+        <ul>
+            <li><a th:href="@{/findBooksByCondition/api}">商城首页</a></li>
+            <li><a href="#">图书详情</a></li>
+        </ul>
+    </div>
+</section>
+
+<section class="blog-page-content latest-news section-padding shop-page single-blog-page single-class-content">
+    <div class="container">
+        <div class="single-product-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="product-info">
+                        <div class="single-product-carousel-content-box owl-carousel owl-theme">
+                            <div th:each="obj:${datas2}">
+                                <div class="item">
+                                    <img th:src="${obj.picturePlace}" alt="Awesome Image" style="width: 100%;height: 700px" id="firstImage">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-product-carousel-thumbnail-box owl-carousel owl-theme" >
+                            <div class="item"  th:each="obj:${datas2}" style="width: 135px;height: 147px">
+                                <img th:src="${obj.picturePlace}" alt="">
+                            </div>
+                        </div>
+                        <!--<div class="link"><a href="cart-page.html"><span class="icon-add"></span></a></div>-->
+                    </div>
+
+
+                </div>
+                <div class="col-md-6" th:each="obj:${datas}">
+                    <div class="top-box clearfix">
+                        <div class="text-box">
+                            <h3 th:text="${obj.name}" id="bookName">Stuffed soft sitting</h3>
+                        </div>
+                        <div class="text">
+                            <p th:text="${obj.introduce}"></p><br/>
+                            <p>
+                                <a th:text="'作者：'+${obj.author}" style="color: #337ab7"></a>
+                            </p>
+                            <p>
+                                <span>出版社：<a th:text="${obj.press}" style="color: #337ab7"></a></span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span th:text="'出版日期：'+${obj.publishDate}"></span>
+                            </p>
+
+                        </div>
+                        <div class="price-box">
+                            <p>
+                                <span class="price-box" >价格：<span th:text="${obj.price}" id="bookPrice"></span>积分</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span th:text="'销量：'+${obj.saleVolume}" style="font-size: 16px"></span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span th:text="'库存：'+${obj.amount}" style="font-size: 16px"></span>
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="bottom-box clearfix" th:each="obj:${datas}">
+                        <div class="input-box pull-left" style="width: 60px">
+                            <span>数量:</span><input type="number" value="1" id="amount">
+                        </div>
+                        <div class="button-box pull-left">
+                            <button onclick="addToCart(this)" th:name="${obj.id}"
+                                    class="theme-btn btn-style-one" style="font-size: 16px;margin-right: 10px">加入购物车
+                            </button>
+                        </div>
+                        <div class="button-box pull-left">
+                            <button onclick="confirmOrder(this)" th:name="${obj.id}"
+                                    class="theme-btn btn-style-one" style="font-size: 16px">立即购买
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="tab-box">
+                        <div class="tab-content">
+                            <div class="single-tab-content tab-pane fade in active" id="description">
+                                <p>
+                                    给家长的建议：<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    学习英语应从什么时候开始？专家告诉我们，儿童时期是学习英语的黄金期。由于儿童的大脑处在发育期，因此当儿童学习一门以上的语言时，大脑会自动进行分区，不同的语言系统直接与事物概念相联系，不必经过母语翻译。
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    同时，儿童学习外语对母语不但没有副作用，反而使他们超越语言能力，在认知能力上受益，促进其认知能力的发展。因此，儿童时期是学习英语的适佳阶段。家长和老师应抓住孩子语言学习的黄金关键期，为孩子选择合适的启蒙读物。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div th:each="obj:${datas}" >
+                <p class="book-content">内容简介</p><hr style="margin-top: 0">
+                <p th:text="${obj.content}" style="font-size: 14px"></p>
+                <br>
+                <p class="book-content">作者简介</p><hr style="margin-top: 0">
+                <p th:text="${obj.authorIntro}" style="font-size: 14px"></p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<hr>
+<div class="single-product-box">
+
+</div>
+
+
+<!--<section class="shop">-->
+    <!--<div class="container">-->
+        <!--<div class="section-title center pb-60">-->
+            <!--<h2>Our Latest <span>Products</span></h2>-->
+        <!--</div>-->
+
+
+        <!--<div class="team-list row">-->
+            <!--<div class="col-md-3 col-sm-6 col-xs-12">-->
+                <!--<div class="item wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s" data-wow-offset="0" style="visibility: visible; animation-duration: 2s; animation-delay: 0.5s; animation-name: fadeIn;">-->
+                    <!--<figure class="img-holder">-->
+                        <!--<a href="#"><img src="images/product/1.jpg" alt="Awesome Image"></a>-->
+                    <!--</figure>-->
+                    <!--<div class="content">-->
+                        <!--<h2><a href="#">Jigsaw box alphabets</a></h2>-->
+                        <!--<p>$ 85</p>-->
+                        <!--<div class="cart">-->
+                            <!--<a href="cart-page.html"><span class="flaticon-shop"></span></a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-3 col-sm-6 col-xs-12">-->
+                <!--<div class="item wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s" data-wow-offset="0" style="visibility: visible; animation-duration: 2s; animation-delay: 0.5s; animation-name: fadeIn;">-->
+                    <!--<figure class="img-holder">-->
+                        <!--<a href="#"><img src="images/product/2.jpg" alt="Awesome Image"></a>-->
+                    <!--</figure>-->
+                    <!--<div class="content">-->
+                        <!--<h2><a href="#">Jigsaw box alphabets</a></h2>-->
+                        <!--<p>$ 85</p>-->
+                        <!--<div class="cart">-->
+                            <!--<a href="cart-page.html"><span class="flaticon-shop"></span></a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-3 col-sm-6 col-xs-12">-->
+                <!--<div class="item wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s" data-wow-offset="0" style="visibility: visible; animation-duration: 2s; animation-delay: 0.5s; animation-name: fadeIn;">-->
+                    <!--<figure class="img-holder">-->
+                        <!--<a href="#"><img src="images/product/3.jpg" alt="Awesome Image"></a>-->
+                    <!--</figure>-->
+                    <!--<div class="content">-->
+                        <!--<h2><a href="#">Jigsaw box alphabets</a></h2>-->
+                        <!--<p>$ 85</p>-->
+                        <!--<div class="cart">-->
+                            <!--<a href="cart-page.html"><span class="flaticon-shop"></span></a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-3 col-sm-6 col-xs-12">-->
+                <!--<div class="item wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s" data-wow-offset="0" style="visibility: visible; animation-duration: 2s; animation-delay: 0.5s; animation-name: fadeIn;">-->
+                    <!--<figure class="img-holder">-->
+                        <!--<a href="#"><img src="images/product/4.jpg" alt="Awesome Image"></a>-->
+                    <!--</figure>-->
+                    <!--<div class="content">-->
+                        <!--<h2><a href="#">Jigsaw box alphabets</a></h2>-->
+                        <!--<p>$ 85</p>-->
+                        <!--<div class="cart">-->
+                            <!--<a href="cart-page.html"><span class="flaticon-shop"></span></a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+        <!--</div>-->
+
+    <!--</div>-->
+<!--</section>-->
+
+<section class="footer">
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-bg">
+            <div class="container">
+                <div class="pull-left">
+                    <figure><a href="#"><img src="../static/images/logo/1.png" alt=""></a></figure>
+                </div>
+                <div class="pull-right">
+                    <div class="menu">
+                        <ul class="clearfix">
+                            <li><a th:href="@{/index(token=${session.token})}">home</a></li>
+                            <li><a th:href="@{/word(token=${session.token})}">word</a></li>
+                            <li><a th:href="@{/findAllSentences/api(token=${session.token},type=1)}">sentential</a></li>
+                            <li><a href="gallery.html">listening</a></li>
+                            <li><a href="news.html">shop</a></li>
+                            <li><a href="shop.html">game</a></li>
+                        </ul>
+                    </div>
+                    <div class="copy-right">
+                        Zone @ 2019.Company name All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--Scroll to top-->
+<div class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></div>
+
+<!-- jQuery js -->
+<script th:src="@{/static/assets/jquery/jquery-1.12.3.min.js}"></script>
+<script src="../static/js/jquery.cookie.js"></script>
+<script src="../static/js/myjs.js"></script>
+<!-- sweetalert -->
+<script th:src="@{/static/js/sweetalert-dev.js}"></script>
+<!-- bootstrap js -->
+<script th:src="@{/static/assets/bootstrap/js/bootstrap.min.js}"></script>
+<!-- jQuery ui js -->
+<script th:src="@{/static/assets/jquery-ui-1.11.4/jquery-ui.js}"></script>
+
+<!-- wow js -->
+<script th:src="@{/static/assets/wow.js}"></script>
+
+<!-- owl carousel js -->
+<script th:src="@{/static/assets/owl.carousel-2/owl.carousel.min.js}"></script>              <!-- jquery.bxslider js -->
+<script th:src="@{/static/assets/jquery.bxslider/jquery.bxslider.min.js}"></script>
+<!-- jQuery validation -->
+<script th:src="@{/static/assets/jquery-validation/dist/jquery.validate.min.js}"></script>
+<!-- gmap.js helper -->
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRvBPo3-t31YFk588DpMYS6EqKf-oGBSI"></script>-->
+<!-- gmap.js -->
+<!--<script src="assets/gmaps.js"></script>-->
+
+<!-- mixit u -->
+<script th:src="@{/static/assets/jquery.mixitup.min.js}"></script>
+<script th:src="@{/static/assets/isotope.pkgd.min.js}"></script>
+<script th:src="@{/static/assets/jquery.countdown.min.js}"></script>
+<script th:src="@{/static/assets/masterslider/masterslider.js}"></script>
+<script th:src="@{/static/assets/SmoothScroll.js}"></script>
+
+<!-- revolution slider js -->
+<script th:src="@{/static/assets/revolution/js/jquery.themepunch.tools.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/jquery.themepunch.revolution.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.actions.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.carousel.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.kenburn.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.layeranimation.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.migration.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.navigation.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.parallax.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.slideanims.min.js}"></script>
+<script th:src="@{/static/assets/revolution/js/extensions/revolution.extension.video.min.js}"></script>
+
+<script th:src="@{/static/assets/Polyglot-Language-Switcher-master/js/jquery.polyglot.language.switcher.js}"></script>
+<script th:src="@{/static/assets/fancyapps-fancyBox/source/jquery.fancybox.pack.js}"></script>
+<script th:src="@{/static/assets/scrollbar.js}"></script>
+
+<!--<script src="js/default-map-script.js"></script>-->
+<script th:src="@{/static/js/script.js}"></script>
+
+</body>
+</html>
