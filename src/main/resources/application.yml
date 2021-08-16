@@ -33,7 +33,7 @@ mail:
   host: smtp.qq.com # 指定发送邮件的主机smtp.qq.com(QQ)|smtp.163.com(网易)
   subject: 【onlineEnglishLearning - Activate Your Account】
   senderEmail: 857370734@qq.com # 发件人邮箱
-  authCode: jcwpeipytwfmbegh
+  authCode: xxxxxxxx
 server:
   servlet:
     context-path: /onlineEnglishLearning
